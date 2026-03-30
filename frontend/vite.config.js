@@ -7,11 +7,11 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 8080,
-    allowedHosts: 'all'
+    allowedHosts: ['idmrs-production-a092.up.railway.app']
   },
   preview: {
     host: '0.0.0.0',
     port: 8080,
-    allowedHosts: 'all'
+    allowedHosts: ['idmrs-production-a092.up.railway.app']
   }
 })
