@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { 
   BarChart3, Plus, LogOut, Wallet, Calendar, 
-  Trash2, Filter, Sparkles, ChevronDown, User as UserIcon, Loader2
+  Trash2, Filter, Sparkles, ChevronDown, User as UserIcon, Loader2, Edit2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,6 +11,8 @@ const Dashboard = ({ onLogout }) => {
   const [insights, setInsights] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [isEditingBudget, setIsEditingBudget] = useState(false);
+  const [newBudget, setNewBudget] = useState('');
   const [newExpense, setNewExpense] = useState({ title: '', amount: '', category: 'FOOD', expenseDate: new Date().toISOString().split('T')[0] });
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user') || '{}'));
 
@@ -49,6 +51,16 @@ const Dashboard = ({ onLogout }) => {
     if (window.confirm('Are you sure?')) {
       await api.delete(`/expenses/${id}`);
       fetchData();
+    }
+  };
+
+  const handleUpdateBudget = async () => {
+    try {
+      await api.put('/users/budget', { budget: parseFloat(newBudget) });
+      setIsEditingBudget(false);
+      fetchData();
+    } catch (err) {
+      alert('Failed to update balance');
     }
   };
 
@@ -127,7 +139,7 @@ const Dashboard = ({ onLogout }) => {
                       </td>
                       <td style={{ padding: '1rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>{exp.expenseDate}</td>
                       <td style={{ padding: '1rem', textAlign: 'right', fontWeight: 700, color: 'white' }}>
-                        ${exp.amount.toFixed(2)}
+                        ₹{exp.amount.toFixed(2)}
                       </td>
                       <td style={{ padding: '1rem', textAlign: 'right' }}>
                         <button onClick={() => handleDelete(exp.id)} className="btn" style={{ padding: '0.4rem', color: '#64748b' }}>
@@ -189,19 +201,42 @@ const Dashboard = ({ onLogout }) => {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <div>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Calendar size={14} /> Total Balance
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Calendar size={14} /> Total Balance
+                    </div>
+                    {!isEditingBudget && (
+                      <button 
+                        onClick={() => { setIsEditingBudget(true); setNewBudget(insights?.monthlyBudget || '5000'); }}
+                        style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', padding: '2px' }}
+                      >
+                        <Edit2 size={12} />
+                      </button>
+                    )}
                   </div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>${insights?.monthlyBudget?.toLocaleString() || '0'}</div>
+                  {isEditingBudget ? (
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginTop: '0.5rem' }}>
+                      <input 
+                        type="number" 
+                        className="input-field" 
+                        style={{ height: '32px', padding: '4px 8px', fontSize: '0.9rem' }} 
+                        value={newBudget} 
+                        onChange={(e) => setNewBudget(e.target.value)} 
+                      />
+                      <button onClick={handleUpdateBudget} className="btn btn-primary" style={{ padding: '4px 8px', fontSize: '0.8rem' }}>Set</button>
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>₹{insights?.monthlyBudget?.toLocaleString() || '0'}</div>
+                  )}
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Spend</div>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f43f5e' }}>${insights?.totalSpend?.toLocaleString() || '0'}</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f43f5e' }}>₹{insights?.totalSpend?.toLocaleString() || '0'}</div>
                   </div>
                   <div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Savings</div>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#10b981' }}>${insights?.savings?.toLocaleString() || '0'}</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#10b981' }}>₹{insights?.savings?.toLocaleString() || '0'}</div>
                   </div>
                 </div>
                 {/* Progress Bar */}
@@ -238,7 +273,7 @@ const Dashboard = ({ onLogout }) => {
                 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div className="input-group">
-                    <label className="input-label">Amount ($)</label>
+                    <label className="input-label">Amount (₹)</label>
                     <input required type="number" step="0.01" className="input-field" placeholder="0.00" value={newExpense.amount} onChange={(e) => setNewExpense({...newExpense, amount: e.target.value})} />
                   </div>
                   <div className="input-group">
