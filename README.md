@@ -7,7 +7,7 @@ A production-ready, scalable, and secure Full Stack application designed to mana
 ## 🏗️ Architecture Explanation
 The project is built using a **Modular Layered Architecture** for maximum scalability and clear separation of concerns:
 
-1.  **Backend (Java 17 & Spring Boot 3)**:
+1.  **Backend (Java 21 & Spring Boot 3)**:
     *   **Layered (Controller → Service → Repository)**: Adheres to SOLID principles for clean and maintainable logic.
     *   **Security Layer**: Implements **JWT-based Authentication** using Spring Security for stateless, secure API access.
     *   **Business Intelligence**: Features a specialized **Recommendation Engine** that analyzes data patterns to provide actionable spending suggestions.
@@ -22,7 +22,7 @@ The project is built using a **Modular Layered Architecture** for maximum scalab
 ## 🛠️ Project Setup Instructions
 
 ### 1. Prerequisites
-*   **Java**: JDK 17+ installed.
+*   **Java**: JDK 21+ installed.
 *   **Database**: MySQL Server 8.0+ running.
 *   **Web**: React.js 18+ & npm.
 
@@ -34,7 +34,6 @@ The project is built using a **Modular Layered Architecture** for maximum scalab
     cd idmrs-backend
     mvn clean spring-boot:run
     ```
-4.  The server will be live at [**http://localhost:8080**](http://localhost:8080).
 
 ### 3. Frontend Initialization
 1.  Open a new terminal.
@@ -44,16 +43,14 @@ The project is built using a **Modular Layered Architecture** for maximum scalab
     npm install
     npm run dev
     ```
-3.  Access the web app at [**http://localhost:5173**](http://localhost:5173) (or 5174).
-
 ---
 
-## 📡 API Documentation & Endpoints
-The backend is fully self-documenting via **Swagger UI** and follows REST standards.
+## 🌐 Hosted Links
+*   **Live Web Dashboard**: [🚀 https://idmrs-production-a092.up.railway.app/](https://idmrs-production-a092.up.railway.app/)
+  
+*   **Interactive API Documentation (Swagger UI)**: [📡 https://idmrs-production.up.railway.app/swagger-ui/index.html](https://idmrs-production.up.railway.app/swagger-ui/index.html)
 
-### **Documentation Links**
-*   **Live Swagger UI**: [🚀 http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-*   **Postman/OpenAPI Spec**: [📥 http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+---
 
 ### **Key API Routes**
 | Category | Method | Endpoint | Auth Required |
@@ -75,9 +72,3 @@ The backend is fully self-documenting via **Swagger UI** and follows REST standa
 
 ---
 
-## 🌐 Hosted Links
-*   **Live Web Dashboard**: [🚀 https://idmrs-production-a092.up.railway.app/](https://idmrs-production-a092.up.railway.app/)
-  
-*   **Interactive API Documentation (Swagger UI)**: [📡 https://idmrs-production.up.railway.app/swagger-ui/index.html](https://idmrs-production.up.railway.app/swagger-ui/index.html)
-
----
