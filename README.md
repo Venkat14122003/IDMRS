@@ -74,3 +74,10 @@ The backend is fully self-documenting via **Swagger UI** and follows REST standa
 *   ✅ **UI/UX**: Responsive, Glassmorphism design with Framer Motion animations.
 
 ---
+
+## 🌐 Hosted Links
+*   **Live Web Dashboard**: [🚀 https://idmrs-production-a092.up.railway.app/](https://idmrs-production-a092.up.railway.app/)
+  
+*   **Interactive API Documentation (Swagger UI)**: [📡 https://idmrs-production.up.railway.app/swagger-ui/index.html](https://idmrs-production.up.railway.app/swagger-ui/index.html)
+
+---
