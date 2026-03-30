@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
-    port: process.env.PORT || 8080,
+    port: 8080,
     allowedHosts: 'all'
   },
   preview: {
     host: '0.0.0.0',
-    port: process.env.PORT || 8080,
+    port: 8080,
     allowedHosts: 'all'
   }
 })
